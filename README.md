@@ -7,5 +7,6 @@ left right arrow keys
 attack with mace D
 attack with orbital strike cannon S
 lunge A
-
+also launch a orbital after you spawn because you will be surrounded by Orcs and will be stuck 
 mace only works if player if falling on the exact location of the enemy 
+
