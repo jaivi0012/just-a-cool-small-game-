@@ -31,7 +31,10 @@ Orc6VelocityY = 0
 Orc7VelocityY = 0
 Orc8VelocityY = 0
 
+orcDamege = -20
+
 orcHelth = [150, 100, 100, 100, 100, 100, 100, 100]
+playeHelth = 500
 
 tntVelocity = 0
 
@@ -47,15 +50,40 @@ playerDir = 'Right'
 rodPulled = False
 currentWeapon = 'mace'
 attack = False
+playerAnim = False
+PlayerMoving = False
 exploded = False
-orcSpawn1 = True
-orcSpawn2 = True
-orcSpawn3 = True
-orcSpawn4 = True
-orcSpawn5 = True
-orcSpawn6 = True
-orcSpawn7 = True
-orcSpawn8 = True
+
+waves = True
+
+
+wave1 = True
+wave2 = True
+wave3 = True
+wave4 = True
+wave5 = True
+wave6 = True
+wave7 = True
+
+waveOver1 = False
+waveOver2 = False
+waveOver3 = False
+waveOver4 = False
+waveOver5 = False
+waveOver6 = False
+waveOver7 = False
+
+orcSpawn1 = False
+orcSpawn2 = False
+orcSpawn3 = False
+orcSpawn4 = False
+orcSpawn5 = False
+orcSpawn6 = False
+orcSpawn7 = False
+orcSpawn8 = False
+
+
+
 gameBegin = False
 menuButtonPress = True
 showDialogue = False
@@ -76,6 +104,7 @@ orcSpeed = 3
 counter = 0
 count = 0
 cycles = 0
+PlayerImg = None
 
 gameMenu = pygame.image.load('survivalGame/frontMenu.png').convert()
 playButton = pygame.image.load('survivalGame/playButton.png').convert()
@@ -91,7 +120,6 @@ orc6OG = pygame.image.load('survivalGame/Orc1.png').convert_alpha()
 orc7OG = pygame.image.load('survivalGame/Orc1.png').convert_alpha()
 orc8OG = pygame.image.load('survivalGame/Orc1.png').convert_alpha()
 
-playerOG = pygame.image.load('survivalGame/Soldier1.png').convert_alpha()
 
 maceOG = pygame.image.load('survivalGame/mace.png').convert_alpha()
 
@@ -112,7 +140,23 @@ platform4OG = pygame.image.load('survivalGame/platform.png').convert_alpha()
 platform5OG = pygame.image.load('survivalGame/platform.png').convert_alpha()
 platform6OG = pygame.image.load('survivalGame/platform.png').convert_alpha()
 
-player = pygame.transform.scale(playerOG,(70,70))
+
+playerWalk = [ pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk1.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk2.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk3.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk4.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk5.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk6.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk7.png').convert_alpha(),
+               pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk8.png').convert_alpha()
+               ]
+
+playerIdle = pygame.image.load('survivalGame/SoldierWalk/Soldier_Walk8.png').convert_alpha()
+
+playerAnimationIndex = 0
+playerAnimationCount = 0
+playerAnimationSpeed = 2
+
 
 orc1 = pygame.transform.scale(orc1OG,(70,70))
 orc2 = pygame.transform.scale(orc2OG,(70,70))
@@ -162,7 +206,7 @@ while running:
 
         if gameBegin == True:
             if event.type == pygame.KEYDOWN:
-                
+                PlayerMoving = False
                 if event.key == pygame.K_SPACE and doubleJump == True:
                     velocityY = jumpHeight  
                     jumpCount += 1
@@ -192,7 +236,6 @@ while running:
         counter = 0   
 
 
-    print(lunge)
     playerRect = pygame.Rect(x + 21, y+ 22, 30, 40)
     
     maceRect = pygame.Rect(x + 25,y + 45,20,80)
@@ -217,10 +260,10 @@ while running:
     if gameBegin == True:
         if keys[pygame.K_LEFT]:
             x -= speed
-
         if keys[pygame.K_RIGHT]:
             x += speed
-
+        if keys[pygame.K_RIGHT] or keys[pygame.K_LEFT]:
+            PlayerMoving = True
         if lunge == True and playerDir == 'Right':
             x += Power
         if lunge == True and playerDir == 'Left':
@@ -245,12 +288,16 @@ while running:
         currentMace = mace_flipped
         playerDir = 'Right'
         maceX = 50
-
+        playerAnim = True
     if x < oldX:
         currentMace = mace    
         playerDir = 'Left'
         maceX = -15
+        playerAnim = True
 
+    if x == oldX:
+        playerAnim = False
+    
     if x < 0:
         x = 0
 
@@ -430,11 +477,44 @@ while running:
 
  # ---------------------------------------------------------------------------------------------------------------- 
 
+# playerMovingAnimation
+# playerAnimationIndex = 0
+# playerAnimationCount = 0
+# playerAnimationSpeed = 8
+
+
+
+    if PlayerMoving == True:
+        playerAnimationCount += 1
+
+        if playerAnimationCount > playerAnimationSpeed:
+            playerAnimationIndex += 1
+            playerAnimationCount = 0
+
+        if playerAnimationIndex > 7:
+            playerAnimationIndex = 0
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------
     oldX = x
 
     if gameBegin == True:
         screen.blit(currentMace, (x + maceX, y + maceY))  # Draw the mace image at the player's position
-        screen.blit(player, (x, y))  # Draw the player image at the current position
+
+        if playerAnim == False:
+            PlayerImg = playerIdle
+
+        if playerDir == 'Left' and playerAnim == True or playerDir == 'Right' and playerAnim == True:
+            PlayerImg = playerWalk[playerAnimationIndex]
+        PlayerImg = pygame.transform.scale(PlayerImg, (70, 70))
+        if playerDir == 'Left':
+            PlayerImg = pygame.transform.flip(PlayerImg, True, False)
+        if playerDir == 'Right':
+            PlayerImg = pygame.transform.flip(PlayerImg, False, False)
+    
+        screen.blit(PlayerImg, (x, y))
 
         if orcSpawn1 == True:
             screen.blit(orc1, (orcsX[0], orcsY[0]))  # Draw the orc image at a fixed position
@@ -455,6 +535,23 @@ while running:
 
     playButtonRect = pygame.Rect(175, 235, 450, 100)
     exitButtonRect = pygame.Rect(175, 385, 450, 100)
+
+#orc waves -----------------------------------------------------------------------------------------------------------------------------------------------
+   # wave 1
+    if gameBegin == True and waves == True:
+        if wave1 == True and waveOver1 == False:
+            orcSpawn1 = True
+            orcSpawn2 = True
+            wave1 = False
+            waveOver1 = True
+
+        if wave2 == True and waveOver2 == False:
+                    orcSpawn1 = True
+                    orcSpawn2 = True
+                    orcSpawn3 = True
+                    wave2 = False
+                    waveOver2 = True
+# -------------------------------------------------------------------------------------------------------------------------------------------------------------------------       
 
     if gameBegin == False:
         if menuButtonPress == True:  
@@ -514,41 +611,42 @@ while running:
         orcHelth[0] = 150
         orcsX[0] = 750
         orcsY[0] = 500
+        orcSpawn1 = False
     if orcHelth[1] <= 0:
         orcHelth[1] = 100
         orcsX[1] = 740
         orcsY[1] = 500
-
+        orcSpawn2 = False
     if orcHelth[2] <= 0:
         orcHelth[2] = 100
         orcsX[2] = 730
         orcsY[2] = 500
-
+        orcSpawn3 = False
     if orcHelth[3] <= 0:
         orcHelth[3] = 100
         orcsX[3] = 720
         orcsY[3] = 500    
-
+        orcSpawn4 = False
     if orcHelth[4] <= 0:
         orcHelth[4] = 100
         orcsX[4] = 710
         orcsY[4] = 500
-    
+        orcSpawn5 = False
     if orcHelth[5] <= 0:
         orcHelth[5] = 100
         orcsX[5] = 700
         orcsY[5] = 500
-
+        orcSpawn6 = False
     if orcHelth[6] <= 0:
         orcHelth[6] = 100
         orcsX[6] = 690
         orcsY[6] = 500
-
+        OrcSpawn7 = False
     if orcHelth[7] <= 0:
         orcHelth[7] = 100
         orcsX[7] = 680
         orcsY[7] = 500
-
+        orcSpawn8 = False
     if cycles > 4:
         if rodPulled == True:
             for i in range(len(tntX)):
