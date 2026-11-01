@@ -7,6 +7,11 @@ left right arrow keys
 attack with mace D
 attack with orbital strike cannon S
 lunge A
-also launch a orbital after you spawn because you will be surrounded by Orcs and will be stuck 
+to change to next line in the dialogue press leftCTRL
 mace only works if player if falling on the exact location of the enemy 
 
+
+the orcs are corrosive and do massive damage to the player if the player touches them so avoid touching the orcs 
+mace will only work if the player is falling and is directly on top of a orc only then if you press D will the mace activate
+the spear will do no damage to any orc it is simply for lunging or as you may call it dashing around
+the orbital will drop tnt on the battlefield but tnt only affects orcs not the player 
