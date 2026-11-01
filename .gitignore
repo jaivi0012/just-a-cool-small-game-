@@ -1,0 +1,10 @@
+venv/
+build/
+dist/
+*.spec
+__pycache__/
+_assets/
+SurvivalGame.AppDir/
+*.AppImage
+appimagetool-*
+*.tar.gz
