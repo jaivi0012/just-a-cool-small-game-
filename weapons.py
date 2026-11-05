@@ -7,6 +7,9 @@ class Weapons:
         self.maceJump = -25
         self.maceCounter = 0
         self.Knockback = 20
+        self.orbitalCounter = 0
+        self.orbitalCycle = 0
+        self.tntVelocity = 0
         maceImg = pygame.image.load('mace.png').convert_alpha()
         spearImg = pygame.image.load('Diamond_Spear.png').convert_alpha()
         rodImg = pygame.image.load('Fishing_Rod.png').convert_alpha()
@@ -27,10 +30,57 @@ class Weapons:
         self.maceDamage = None
         self.facing_direction = player.Direction
 
+        self.nuke = False
+        self.orbital = False
+        self.orbitalStarted = False
+        self.tnt = [
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert(),
+                        pygame.image.load('tnt.jpeg').convert()
+                    ]
+        
+        self.scaledTnt = [pygame.transform.scale(img, (30, 30)) for img in self.tnt]
+    
+        self.tntX = [0, 90, 180, 270, 360, 450, 540, 630, 720]
+        self.tntY = 0
+
         self.currentImg = self.mace_right
 
     def update(self, player):
         self.maceRect = pygame.Rect(player.x + 25,player.y + 45,20,80)
+
+        if self.orbitalCounter <= 85:
+            self.orbitalCounter += 1 
+        if self.orbitalCounter > 85:
+            self.orbitalCounter = 0
+        if self.orbitalCounter > 42: 
+            self.orbital = True
+            self.nuke = False
+        if self.orbitalCounter <= 0:
+            self.orbital = False
+            self.nuke = True
+            self.orbitalCycle += 1
+            if self.tntY > 500:
+                self.tntY = 500
+
+        if self.orbitalStarted == True:
+            
+            self.tntVelocity += 0.9
+            self.tntY += self.tntVelocity
+            if self.tntY > 530:
+                self.tntY = 530
+        if self.orbitalCycle >= 3:
+            self.nuke = False
+            self.orbital = False
+            self.orbitalStarted = False
+            self.tntY = 0
+            self.tntVelocity = 0
 
     def mace(self, orc, player):
         maceDamage = 0
@@ -60,12 +110,16 @@ class Weapons:
         if player.Direction == 'Right':
             player.x += 20
         self.lungeSfx.play()
-    def rod(self): 
-        self.currentWeapon = 'rod'
 
+    def rod(self, orc_List, screen): 
+        self.currentWeapon = 'rod'
+        self.orbital = False
+        self.nuke = True
+        self.orbitalStarted = True
+        self.orbitalCounter = 0
+        self.orbitalCycle = 0
         
-         
-        
+    
     def draw(self, screen, player):
     
         if self.currentWeapon == 'mace':
@@ -89,3 +143,19 @@ class Weapons:
         if player.Direction == 'Left':
             screen.blit(self.currentImg, (player.x - 13, player.y + 16))
         pygame.draw.rect(screen, (0, 255, 0), self.maceRect, 2)
+
+        if self.nuke == True:
+            for tnt_img, x_val in zip(self.scaledTnt, self.tntX):
+                        screen.blit(tnt_img, (x_val, self.tntY))
+                
+        if self.orbital == True:
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[0], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[1], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[2], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[3], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[4], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[5], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[6], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[7], self.tntY, 30, 30))
+            pygame.draw.rect(screen, (255, 255, 255), (self.tntX[8], self.tntY, 30, 30))
+        

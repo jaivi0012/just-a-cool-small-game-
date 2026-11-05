@@ -20,6 +20,7 @@ player = playerLogic.Player(0, 500)
 Weapons = weapons.Weapons(player)
 Running = True
 orc1 = orcSpawn.OrcSpawn(700, 500, 250)
+orc_List = [orc1]
 orc1spawn = True
 lunge = False
 attack = False
@@ -65,7 +66,7 @@ while Running:
         attack = False
    
     if key[pygame.K_s]:
-        Weapons.rod()
+        Weapons.rod(orc_List, screen)
     if orc1spawn == True:
         orc1.orcAi(player, True)
     if orc1.health <= 0:
