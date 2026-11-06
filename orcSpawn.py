@@ -2,10 +2,11 @@ import pygame
 
 
 class OrcSpawn:
-    def __init__(self, ox, oy, health):
+    def __init__(self, ox, oy, health, speed, restriction):
         self.ox = ox
         self.oy = oy
         self.health = health
+        self.restricton = restriction
         self.orcsoldier = [
             pygame.image.load('OrcWalk/Orc1.png').convert_alpha(),
            # pygame.image.load('OrcWalk/Orc2.png').convert_alpha(),
@@ -17,7 +18,9 @@ class OrcSpawn:
            # pygame.image.load('OrcWalk/Orc8.png').convert_alpha()
         ]
 
-        self.orcRect = pygame.Rect(ox, oy, 70, 70)
+        self.checkpointReached = False
+
+        self.orcRect = pygame.Rect(ox + 13, oy + 25, 30, 35)
 
         self.orcsoldier_right = [pygame.transform.scale(img, (70, 70)) for img in self.orcsoldier]
         self.orcsoldier_left = [pygame.transform.flip(img, True, False) for img in self.orcsoldier_right]
@@ -29,7 +32,7 @@ class OrcSpawn:
         self.orcDirection = 'Right'
         self.orcVelocityX = 0
         self.orcAccel = 0
-        self.orcSpeed = 1.5
+        self.orcSpeed = speed
         self.friction = 0.9
     def AnimationOrc(self):
         self.orcAnimationCounter += 1
@@ -55,33 +58,39 @@ class OrcSpawn:
                 self.orcDirection = 'Right'
                 self.orcVelocityX += self.orcAccel
 
-            self.orcRect = pygame.Rect(self.ox, self.oy, 70, 70)
+            self.orcRect = pygame.Rect(self.ox + 13, self.oy + 25, 30, 35)
 
             self.orcVelocityX *= self.friction
             self.ox += self.orcVelocityX
 
-        if self.ox > 750:
-            self.ox = 750
-        if self.ox < 0:
-            self.ox = 0
+
+        if self.restriction == True:
+            if self.ox > 750:
+                self.ox = 750
+            if self.ox < 0:
+                self.ox = 0
 
     def orcMove(self, targetX, hostility):
         if hostility == False:
+            
             self.orcAccel = self.orcSpeed * (1 - self.friction)
-            if targetX > self.ox:
-                self.orcDirection = 'Right'
-                self.orcVelocityX += self.orcAccel
-            if targetX < self.ox:
-                self.orcDirection = 'Left'
-                self.orcVelocityX -= self.orcAccel
-            self.orcVelocityX *= self.friction
-            self.ox += self.orcVelocityX
+            if self.checkpointReached == False:
+                if targetX > self.ox:
+                    self.orcDirection = 'Right'
+                    self.orcVelocityX += self.orcAccel
+                if targetX < self.ox:
+                    self.orcDirection = 'Left'
+                    self.orcVelocityX -= self.orcAccel
+                    
+                self.orcVelocityX *= self.friction
+                self.ox += self.orcVelocityX
 
+            
             if targetX == self.ox:
-                checkpointReached = True
+                self.checkpointReached = True
             if targetX != self.ox:
-                checkpointReached = False
-        return checkpointReached
+                self.checkpointReached = False
+        
 
     def attack(self, player, hostility):
         if hostility == True:
@@ -90,4 +99,4 @@ class OrcSpawn:
 
     def draw(self, screen):
         screen.blit(self.orcMain, (self.ox, self.oy))
-        pygame.draw.rect(screen, (0, 255, 0), self.orcRect, 2) 
+       # pygame.draw.rect(screen, (0, 255, 0), self.orcRect, 2) 

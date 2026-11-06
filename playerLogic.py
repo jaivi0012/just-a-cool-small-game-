@@ -17,6 +17,7 @@ class Player:
         self.animationCounter = 0
         self.Direction = "Right"
         self.moving = False
+        self.under = False
         screen = pygame.display.set_mode((800, 600))
         self.playerRect = pygame.Rect(x + 21, y+ 22, 30, 40)
 
@@ -34,6 +35,9 @@ class Player:
         self.player_right = [pygame.transform.scale(img, (70, 70)) for img in playerFrames]
         self.player_left = [pygame.transform.flip(img, True, False) for img in self.player_right]
         self.playerImage = self.player_right[0]
+
+    def playerUpdate(self):
+        self.playerRect.topleft = (self.x + 21, self.y + 22)
 
     def move(self,key):
        
@@ -54,24 +58,27 @@ class Player:
         self.y_velocity += self.gravity
         self.y += self.y_velocity
 
-
-
-        if self.y >= 500:
-            self.y = 500
-            self.y_velocity = 0
-            self.on_ground = True
-            self.jumpCounter = 0
-        else:
-            self.on_ground = False
+        if self.under == False:
+            if self.y >= 500:
+                self.y = 500
+                self.y_velocity = 0
+                self.on_ground = True
+                self.jumpCounter = 0
+            else:
+                self.on_ground = False
 
         if self.y >= 500:
             self.on_ground = True
         if self.y < 500:
             self.on_ground = False
-        if self.y > 500:
-            self.y = 500
-            self.y_velocity = 0
-        
+       
+        if self.x > 111 and self.x < 154 and self.y >= 500:
+            self.under = True
+        else:
+            self.under = False
+
+        if self.y > 700:
+            self.y = 700
 
         if self.jumpCounter > 2 and self.on_ground == True:
             self.jumpCounter = 0
