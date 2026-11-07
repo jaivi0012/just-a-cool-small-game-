@@ -6,7 +6,7 @@ class OrcSpawn:
         self.ox = ox
         self.oy = oy
         self.health = health
-        self.restricton = restriction
+        self.restriction = restriction
         self.orcsoldier = [
             pygame.image.load('OrcWalk/Orc1.png').convert_alpha(),
            # pygame.image.load('OrcWalk/Orc2.png').convert_alpha(),

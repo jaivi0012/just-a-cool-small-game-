@@ -39,7 +39,7 @@ class Player:
     def playerUpdate(self):
         self.playerRect.topleft = (self.x + 21, self.y + 22)
 
-    def move(self,key):
+    def move(self,key, backgroundState):
        
        
         if key[pygame.K_LEFT]:
@@ -72,11 +72,16 @@ class Player:
         if self.y < 500:
             self.on_ground = False
        
-        if self.x > 111 and self.x < 154 and self.y >= 500:
+        if self.x > 111 and self.x < 154 and self.y >= 500 and backgroundState == 'back1':
             self.under = True
         else:
             self.under = False
-
+        if backgroundState == 'back2' and self.x < 0:
+            self.x = 0
+        if backgroundState == 'back1' and self.x < 0:
+                    self.x = 0
+        if backgroundState == 'back1' and self.x > 750:
+                    self.x = 750
         if self.y > 700:
             self.y = 700
 
