@@ -7,6 +7,7 @@ left right arrow keys
 attack with mace D
 attack with orbital strike cannon S
 lunge A
+stabshot W
 to change to next line in the dialogue press leftCTRL
 mace Windburst only works if player if falling on the exact location of the enemy if player is on the ground player can hit the orcs to knock them back but it wouldnt do much damage  
 
@@ -16,6 +17,9 @@ mace will only work if the player is falling and is directly on top of a orc onl
 the spear will do no damage to any orc it is simply for lunging or as you may call it dashing around
 the orbital will drop tnt on the battlefield but tnt only affects orcs not the player 
 
+update :- 
+
+story has been expanded and a pumpkin character has been added along wiht a new weapon called the stab shot . StabShot is a concentrated version of a orbital strike cannon so all the tnt is concentrated on one enemy doing massive damage for now it can only be used during the fight with the pumpkin to use it press W it will attack the nearest enemy
 
 How TO RUN THe GAME
 to run thew game simply install the app image in the releases and then after it has installed rightclick it press properties then press make the file executable or it may say run as program  
