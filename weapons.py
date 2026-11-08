@@ -21,7 +21,7 @@ class Weapons:
         self.stabPoints = []
         self.stabDistance = 120
         self.stabSpacing = 90
-        self.stabDamage = 60
+        self.stabDamage = 70
         self.stabRange = 500
         maceImg = pygame.image.load('mace.png').convert_alpha()
         spearImg = pygame.image.load('Diamond_Spear.png').convert_alpha()
@@ -41,7 +41,7 @@ class Weapons:
         self.rod_right = pygame.transform.scale(rodImg, (30, 30))
         self.rod_left = pygame.transform.flip(self.rod_right, True, False)
 
-        self.maceRect = pygame.Rect(player.x + 25,player.y + 45,20,80)
+        self.maceRect = pygame.Rect(player.x + 25,player.y + 46,20,80)
         self.maceDamage = None
         self.facing_direction = player.Direction
         self.tntAnimD = False
@@ -71,10 +71,10 @@ class Weapons:
             pygame.image.load('tntExplode/tnt9.png').convert_alpha(),
             pygame.image.load('tntExplode/tnt10.png').convert_alpha()
         ]
-        self.tntExplodeSpeed = 5
+        self.tntExplodeSpeed = 4
         self.tntIndex = 0
         self.tntCounter = 0
-        self.tntAnim = [pygame.transform.scale(img, (100 * 2, 100)) for img in self.tntExplode]
+        self.tntAnim = [pygame.transform.scale(img, (200, 100)) for img in self.tntExplode]
         self.tntDraw = None
         self.scaledTnt = [pygame.transform.scale(img, (30, 30)) for img in self.tnt]
     
@@ -150,7 +150,7 @@ class Weapons:
             
     def mace(self, orc_List, player):
         self.currentWeapon = 'mace'
-        fallspeed = max(player.y_velocity, 0)      # read ONCE, before the bounce changes it
+        fallspeed = max(player.y_velocity, 0)      
         bounced = False
 
         for orc in orc_List:
@@ -220,16 +220,16 @@ class Weapons:
             y = 545
 
         self.stabPoints = []
-        while y > -40:                          # 90px apart, going up to the top of the screen
+        while y > -40:                        
             self.stabPoints.append((centreX, y))
             y -= self.stabSpacing
 
-        self.stabActive = True                  # starts instantly
+        self.stabActive = True                 
         self.stabIndex = 0
         self.stabTimer = 0
         self.stabSfx.play()
 
-        for orc in orc_List:                    # remove this loop if you don't want damage
+        for orc in orc_List:                  
             for (px, py) in self.stabPoints:
                 if math.sqrt((orc.ox + 35 - px) ** 2 + (orc.oy + 35 - py) ** 2) < 65:
                     orc.health -= self.stabDamage + 200
@@ -260,7 +260,7 @@ class Weapons:
                 py = self.explodeY + 15 - self.tntDraw.get_height() // 2
                 screen.blit(self.tntDraw, (px, py))
 
-        # stab shot explosion (the vertical column), its own separate block
+      
         if self.stabActive == True:
             frame = self.tntAnim[self.stabIndex]
             for (px, py) in self.stabPoints:
