@@ -24,19 +24,18 @@ guard1 = orcSpawn.OrcSpawn(900, 500, 250, 1, False)
 guard2 = orcSpawn.OrcSpawn(800, 500, 250, 1, False)
 orcSoldier1 = orcSpawn.OrcSpawn(900, 500, 250, 1.5, False)
 orcSoldier2 = orcSpawn.OrcSpawn(800, 500, 250, 1, False)
-npc1 = orcSpawn.OrcSpawn(200, 500, 250, 1, False)
-
-larryThePumpkin = pumpkinBoss.Boss(700, 450, 10000, 100, 100)
+npc1 = orcSpawn.OrcSpawn(200, 450, 250, 1, False)
+stabby = False
+larryThePumpkin = pumpkinBoss.Boss(700, 450, 50000, 100, 100)
 orc_List = [orcSoldier1, orcSoldier2, larryThePumpkin]
 guard1spawn = True
 guard2spawn = True
 playerInSewer = False
+Dead = False
 lunge = True
 attack = False
 lungeCounter = 0
 change = False
-mace = True
-maceCounter = 0
 dialogue = True
 currentMessage = None
 guardMove = [500, 400]
@@ -45,6 +44,9 @@ hasSpawned = False
 orcSoldierSpawn1 = False
 orcSoldierSpawn2 = False
 bossFight = False
+stab = False
+bossMusicStarted = False
+stabbyCounter = 0
 message = [
     'You Enter a New Dimention',
     'This Dimention is not Home',
@@ -93,6 +95,10 @@ message4 = [
     'npcOrc :- they went to the main city',
     'npcOrc :- just to meet you',
     'npcOrc :- did you see them in there ?',
+    'npcOrc :- they said that they will approach you',
+    'npcOrc :- and then try to communicate with you ',
+    'npcOrc :- they dont intend to harm you',
+    'npcOrc :- so if you see them dont hurt them',
     'npcOrc :- maybe they had reached the city before you',
     'npcOrc :- well may i ask of a small favour from you',
     'npcOrc :- a monster has entered my barn',
@@ -109,12 +115,19 @@ message4 = [
     'QUEST - DEFEAT THE MONSTER'
     
 ]
+
+message5 = [
+    'LARRY THE PUMPKIN has been defeated',
+    'BUT THIS WAS NOT HIS FInAL FORM',
+    'FINAL FORM COMING SOON'
+]
 movement = False
 backgroundState = 'back1'
 gameFont = pygame.font.Font(None, 36)
 messageIndex = 0
 currentSection = 'Beggining'
 text = None
+maceCounter = 0
 gameFont = pygame.font.Font(None, 36)
 dialogueBox = pygame.image.load('dialogueBox.png').convert_alpha()
 while Running:
@@ -139,11 +152,13 @@ while Running:
                     currentSection = 'Barn'
                     dialogue = False
                     movement = True
-                if messageIndex > 24 and currentSection == 'Barn':
+                if messageIndex > 28 and currentSection == 'Barn':
                     messageIndex = 0
                     currentSection = 'end'
                     dialogue = False
                     movement = True
+                if messageIndex > 3 and currentSection == 'end':
+                    Running = False
             if movement == True:
                 
                 if event.key == pygame.K_SPACE:
@@ -151,9 +166,19 @@ while Running:
                 if event.key == pygame.K_a:
                     lunge = True
                     attack = True
-                if event.key == pygame.K_d and mace == True:
-                    Weapons.mace(orc_List, player)
-                    mace = False    
+                if event.key == pygame.K_d and maceCounter == 0:
+                    Weapons.maceU = True
+                if stab == True:
+                    if event.key == pygame.K_w and stabby == False:
+                        Weapons.stabShot(orc_List, player)
+                        stabby = True
+
+
+    if bossFight == True and bossMusicStarted == False:
+        pygame.mixer.music.load('Sounds/cahosConstruct.mp3')
+        pygame.mixer.music.set_volume(0.6)
+        pygame.mixer.music.play(-1)
+        bossMusicStarted = True
     if currentSection == 'Beggining':
         currentMessage = message[messageIndex]
     if currentSection == 'Mid':
@@ -162,8 +187,61 @@ while Running:
         currentMessage = message3[messageIndex]
     if currentSection == 'Barn':
          currentMessage = message4[messageIndex]
+    if currentSection == 'end':
+        currentMessage = message5[messageIndex]
     screen.fill((0, 0, 0))
+    if Dead == True:
+        pygame.mixer.music.stop()
+        player = playerLogic.Player(0, 500)
+        Weapons = weapons.Weapons(player)
+        guard1 = orcSpawn.OrcSpawn(900, 500, 250, 1, False)
+        guard2 = orcSpawn.OrcSpawn(800, 500, 250, 1, False)
+        orcSoldier1 = orcSpawn.OrcSpawn(900, 500, 250, 1.5, False)
+        orcSoldier2 = orcSpawn.OrcSpawn(800, 500, 250, 1, False)
+        npc1 = orcSpawn.OrcSpawn(200, 450, 250, 1, False)
+        larryThePumpkin = pumpkinBoss.Boss(700, 450, 50000, 100, 100)
+        orc_List = [orcSoldier1, orcSoldier2, larryThePumpkin]
+        guard1spawn = True
+        guard2spawn = True
+        playerInSewer = False
+        lunge = True
+        attack = False
+        lungeCounter = 0
+        change = False
+        maceCounter = 0
+        dialogue = True
+        currentMessage = None
+        guardMove = [500, 400]
+        orbital = False
+        hasSpawned = False
+        orcSoldierSpawn1 = False
+        orcSoldierSpawn2 = False
+        bossFight = False
+        bossMusicStarted = False
+        stab = False
+        stabby = False
+        stabbyCounter = 0
+        movement = False
+        backgroundState = 'back1'
+        messageIndex = 0
+        currentSection = 'Beggining'
+        Dead = False
+
+    if stabby == True:
+        stabbyCounter += 1
+        if stabbyCounter > 25:
+            stabby = False
+            stabbyCounter = 0
+    
     bg.draw(screen, backgroundState)
+    if Weapons.maceU == True:
+
+        Weapons.mace(orc_List, player)
+        maceCounter += 1
+        if maceCounter >= 13 or Weapons.maceU == False: 
+            Weapons.maceU = False
+            maceCounter = 0
+
     if backgroundState == 'back7' and bossFight == True:
         larryThePumpkin.update()
         larryThePumpkin.hunt(player)
@@ -174,6 +252,12 @@ while Running:
     if movement == True:
         player.move(key, backgroundState)
         player.playerDirection(key)
+
+    if player.health <= 0:
+        Dead = True
+
+    if backgroundState == 'back6':
+        npc1.draw(screen)
 
     Weapons.update(player, orc_List)
     if currentSection == 'end':
@@ -188,12 +272,6 @@ while Running:
 
     if dialogue == True:
         movement = False
-    if mace == False:
-        maceCounter += 1
- 
-    if maceCounter >= 5:
-        maceCounter = 0
-        mace = True
     
     if lunge == True and attack == True:
         lunge = False
@@ -220,7 +298,9 @@ while Running:
         if orbital == True:
             if key[pygame.K_s]:
                 Weapons.rod()
+
     if playerInSewer == True:
+
         if guard1spawn == True:
             guard1.orcMove(guardMove[0], False)
         if guard1.health <= 0:
@@ -233,6 +313,8 @@ while Running:
     if larryThePumpkin.health < 0:
         bossFight = False
         dialogue = True
+        pygame.mixer.music.stop()
+        bossMusicStarted = False
     
     if currentSection == 'InTunnel':
         guardMove[0] = 1000
@@ -291,6 +373,7 @@ while Running:
                 player.x = 0
                 backgroundState = 'back7'
                 bossFight = True
+                stab = True
     if backgroundState == 'back7':
             if player.x < 0 and bossFight == False:
                 player.x = 750
@@ -318,6 +401,17 @@ while Running:
         guard1.draw(screen)
     if guard2spawn == True:
             guard2.draw(screen)
+
+    if backgroundState == 'back7':
+        if player.x > 750:
+            player.x = 750
+        if player.x < 0:
+            player.x = 0
+    if larryThePumpkin.ox > 750:
+        larryThePumpkin.ox = 750
+    if larryThePumpkin.ox < 0:
+        larryThePumpkin.ox = 0
+
 
     if dialogue == True:
         screen.blit(dialogueBox, (50, 510))
