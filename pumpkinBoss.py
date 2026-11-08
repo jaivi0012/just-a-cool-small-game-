@@ -10,16 +10,17 @@ class Boss:
         self.animationSpeed = 5
         self.animationIndex = 0
         self.animationCounter = 0
-        self.speed = 3
+        self.speed = 5
         self.friction = 0.9
         self.orcVelocityX = 0
         self.velocityY = 0
-        self.orcRect = pygame.Rect(self.ox, self.oy, width, height)
+        self.orcRect = pygame.Rect(self.ox + 200, self.oy + 200, width, height)
         self.boss = pygame.image.load('Boss/pumpkin1.png').convert_alpha()
         self.bossDraw = pygame.transform.scale(self.boss, (height, width))
         self.jumped = False
-        self.damage = 8
+        self.damage = 10
         self.gameFont = pygame.font.Font(None, 36)
+        self.maceD = False
 
         self.bossAttack = pygame.image.load('Boss/pumpkinAttack.png').convert_alpha()
         self.text = self.gameFont.render(f"larry the slime Health: {self.health}", True, (255, 255, 255))
@@ -45,5 +46,5 @@ class Boss:
 
     def Draw(self, screen):
         screen.blit(self.bossDraw, (self.ox, self.oy))
-        pygame.draw.rect(screen, (0, 255, 0), self.orcRect, 2)
-        screen.blit(self.text, (300, 20))
+       # pygame.draw.rect(screen, (0, 255, 0), self.orcRect, 2)
+        screen.blit(self.text, (350, 20))

@@ -96,7 +96,9 @@ bossDefeatDialogue = [
     'But i will be back for a rematch',
     'ORC KING DISAPPEARS',
     'you have defeated the orc king',
-    'an exit has appeared'
+    'an exit has appeared',
+    'you have entered the protal',
+    'you see a new strange world'
 ]
 
 orcBossSpawn = False
@@ -141,7 +143,7 @@ orbital = True
 orcClear = True
 waveOver = False
 waveCounter = 0
-
+startNewGame = False
 orcBossX = 750
 orcBossY = 430  
 orcBossRect = pygame.Rect(0, 0, 0, 0)
@@ -329,7 +331,7 @@ while running:
                 if event.key == pygame.K_DOWN:
                     menuButtonPress = False
      
-          
+        print(clock)
 
         if gameBegin == True:
             if event.type == pygame.KEYDOWN:
@@ -414,6 +416,7 @@ while running:
 
     if dialogueState == 'victory' and dialogueIndex >= len(bossDefeatDialogue):
         showDialogue = False
+        startNewGame = True
         running = False
 
     if showDialogue == True:
@@ -1257,6 +1260,12 @@ while running:
     pygame.display.flip()  
     clock.tick(60) 
     screen.fill((0, 0, 0))  
+    if startNewGame == True:
+        pygame.mixer.music.stop()
+        sys.path.insert(0, os.getcwd())
+        import newLoad         
+
+
 
 
 pygame.quit()
