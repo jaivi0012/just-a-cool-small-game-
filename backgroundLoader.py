@@ -1,6 +1,6 @@
 import pygame
 class background:
-    def __init__(self, ):
+    def __init__(self):
         self.back1 = pygame.image.load('backgroundImg/Sprite-0001.png').convert()
         self.back2 = pygame.image.load('backgroundImg/Sprite-0002.png').convert()
         self.back3 = pygame.image.load('backgroundImg/Sprite-0003.png').convert()
@@ -31,16 +31,16 @@ class background:
             currentBack = self.back6
         if currentBackgroundReq == 'back7':
             currentBack = self.back7
-        if currentBackgroundReq == 'castle1':
+        if currentBackgroundReq == 'Castle1':
             currentBack = self.castle1
-        if currentBackgroundReq == 'castle2':
+        if currentBackgroundReq == 'Castle2':
             currentBack = self.castle2
-        if currentBackgroundReq == 'castle3':
+        if currentBackgroundReq == 'Castle3':
             currentBack = self.castle3
-        if currentBackgroundReq == 'castle4':
+        if currentBackgroundReq == 'Castle4':
             currentBack = self.castle4
-        if currentBackgroundReq == 'castle5':
+        if currentBackgroundReq == 'Castle5':
             currentBack = self.castle5
-        if currentBackgroundReq == 'castle6':
+        if currentBackgroundReq == 'Castle6':
             currentBack = self.castle6        
         screen.blit(currentBack, (0, 0))
