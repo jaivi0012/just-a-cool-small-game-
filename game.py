@@ -33,7 +33,6 @@ orcsVelocityX = [0, 0, 0, 0, 0, 0, 0, 0]
 friction = 0.9
 orcTopSpeed = [3, 2, 1, 2.5, 3.2, 3.9, 1.3, 1.6]
 accel = [0,0,0,0,0,0,0,0]
-orcsVelocityY = [0,0,0,0,0,0,0,0]
 tntX = [0, 90, 180, 270, 360, 450, 540, 630, 720]
 
 tntDistances = []
@@ -50,14 +49,6 @@ orc7Rect = pygame.Rect(0, 0, 0, 0)
 orc8Rect = pygame.Rect(0, 0, 0, 0)
 
 velocityY = 0
-Orc1VelocityY = 0
-Orc2VelocityY = 0
-Orc3VelocityY = 0
-Orc4VelocityY = 0
-Orc5VelocityY = 0
-Orc6VelocityY = 0
-Orc7VelocityY = 0
-Orc8VelocityY = 0
 
 currentMessage = 1
 
@@ -331,7 +322,7 @@ while running:
                 if event.key == pygame.K_DOWN:
                     menuButtonPress = False
      
-        print(clock)
+        # print(clock)
 
         if gameBegin == True:
             if event.type == pygame.KEYDOWN:
@@ -559,7 +550,6 @@ while running:
         orcsX = [750, 740, 730, 720, 710, 700, 690, 680]
         orcsY = [500, 500, 500, 500, 500, 500, 500, 500]
         orcsVelocityX = [0, 0, 0, 0, 0, 0, 0, 0]
-        orcsVelocityY = [0, 0, 0, 0, 0, 0, 0, 0]
         orcHelth = [250, 250, 250, 250, 250, 250, 250, 250]
         orcTopSpeed = [3, 2, 1, 2.5, 3.2, 3.9, 1.3, 1.6]
         orcSpawn1 = False

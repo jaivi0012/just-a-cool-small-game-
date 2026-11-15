@@ -23,7 +23,7 @@ class Boss:
         self.maceD = False
 
         self.bossAttack = pygame.image.load('Boss/pumpkinAttack.png').convert_alpha()
-        self.text = self.gameFont.render(f"larry the slime Health: {self.health}", True, (255, 255, 255))
+        self.text = self.gameFont.render(f"larry the Pumpkin Health: {self.health}", True, (255, 255, 255))
 
     
     def update(self):
@@ -39,6 +39,47 @@ class Boss:
             self.orcVelocityX += accel
         self.orcVelocityX *= self.friction
         self.ox += self.orcVelocityX
+
+    def smartHunt(self, player):
+        accel = self.speed * (1 - self.friction)
+        playerCentre = player.x + 35
+        bossCentre = self.ox + self.width / 2
+        distance = playerCentre - bossCentre        
+
+        playerInAir = player.y < 480
+        playerAbove = playerInAir and abs(distance) < 140
+
+        if playerAbove:
+           
+            if distance > 0:
+                direction = -1
+            else:
+                direction = 1
+          
+            if self.ox <= 10 and direction == -1:
+                direction = 1
+            if self.ox >= 800 - self.width - 10 and direction == 1:
+                direction = -1
+            self.orcVelocityX += direction * accel * 2
+        else:
+           
+            boost = 1
+            if abs(distance) < 250 and playerInAir == False:
+                boost = 1.5
+            if distance < -10:
+                self.orcVelocityX -= accel * boost
+            if distance > 10:
+                self.orcVelocityX += accel * boost
+
+        self.orcVelocityX *= self.friction
+        self.ox += self.orcVelocityX
+
+        if self.ox < 0:
+            self.ox = 0
+            self.orcVelocityX = 0
+        if self.ox > 800 - self.width:
+            self.ox = 800 - self.width
+            self.orcVelocityX = 0
 
     def attack(self, player):
         if self.orcRect.colliderect(player.playerRect):

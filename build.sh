@@ -13,7 +13,7 @@ for f in *.png *.jpeg *.jpg; do
     [ -f "$f" ] && cp "$f" _assets/
 done
 
-pyinstaller --onefile --add-data "_assets:." --paths . --hidden-import newLoad game.py
+pyinstaller --onefile --add-data "_assets:." --paths . --hidden-import newLoad --hidden-import castleLoad --hidden-import orcBoss game.py
 
 mkdir -p SurvivalGame.AppDir/usr/bin
 cp dist/game SurvivalGame.AppDir/usr/bin/game

@@ -25,3 +25,6 @@ How TO RUN THe GAME
 to run thew game simply install the app image in the releases and then after it has installed rightclick it press properties then press make the file executable or it may say run as program  
 
 with all this done the game should run normally as any executable would
+
+## Stuck on a boss?
+Hold **Q** for an instant stab shot that wears a boss down fast.

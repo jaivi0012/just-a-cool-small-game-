@@ -31,7 +31,7 @@ class background:
             currentBack = self.back6
         if currentBackgroundReq == 'back7':
             currentBack = self.back7
-        if currentBackgroundReq == 'Castle1':
+        if currentBackgroundReq == 'Castle1' or currentBackgroundReq == 'Castle':
             currentBack = self.castle1
         if currentBackgroundReq == 'Castle2':
             currentBack = self.castle2
@@ -39,7 +39,7 @@ class background:
             currentBack = self.castle3
         if currentBackgroundReq == 'Castle4':
             currentBack = self.castle4
-        if currentBackgroundReq == 'Castle5':
+        if currentBackgroundReq == 'Castle5' or currentBackgroundReq == 'Castle0':
             currentBack = self.castle5
         if currentBackgroundReq == 'Castle6':
             currentBack = self.castle6        

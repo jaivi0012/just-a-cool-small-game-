@@ -235,6 +235,10 @@ class Weapons:
                     orc.health -= self.stabDamage + 200
                     break
     
+    def downwardLunge(self, player):
+        self.currentWeapon = 'spear'
+        player.y_velocity += 20
+        self.lungeSfx.play
     def draw(self, screen, player):
 
         if self.currentWeapon == 'mace':

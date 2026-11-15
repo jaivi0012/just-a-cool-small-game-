@@ -8,3 +8,13 @@ SurvivalGame.AppDir/
 *.AppImage
 appimagetool-*
 *.tar.gz
+__pycache__/
+build/
+dist/
+venv/
+_assets/
+*.AppDir/
+*.AppImage
+*.spec
+*.bak
+Tiny RPG*/

@@ -74,12 +74,11 @@ class Player:
        
         if self.x > 111 and self.x < 154 and self.y >= 500 and backgroundState == 'back1':
             self.under = True
-        else:
-            self.under = False
-        if self.x > 46 and self.x < 110 and self.y >= 500 and backgroundState == 'Castle3':
+        elif self.x > 46 and self.x < 110 and self.y >= 500 and backgroundState == 'Castle3':
             self.under = True
         else:
             self.under = False
+            
         if backgroundState == 'back2' and self.x < 0:
             self.x = 0
         if backgroundState == 'back1' and self.x < 0:

@@ -18,6 +18,10 @@ class OrcSpawn:
            # pygame.image.load('OrcWalk/Orc8.png').convert_alpha()
         ]
 
+        self.startX = ox
+        self.startY = oy
+        self.startHealth = health
+
         self.checkpointReached = False
 
         self.orcRect = pygame.Rect(ox + 13, oy + 25, 30, 35)
@@ -96,6 +100,13 @@ class OrcSpawn:
         if hostility == True:
             if self.orcRect.colliderect(player.playerRect):
                 player.health -= 2
+
+    def reset(self):
+        self.ox = self.startX
+        self.oy = self.startY
+        self.health = self.startHealth
+        self.orcVelocityX = 0
+        self.orcRect = pygame.Rect(self.ox + 13, self.oy + 25, 30, 35)
 
     def draw(self, screen):
         screen.blit(self.orcMain, (self.ox, self.oy))

@@ -13,7 +13,7 @@ import pumpkinBoss
 
 pygame.init()
 pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=512)
-pygame.mixer.set_num_channels(32)
+pygame.mixer.set_num_channels(10000)
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 bg = backgroundLoader.background()
@@ -119,7 +119,10 @@ message4 = [
 message5 = [
     'LARRY THE PUMPKIN has been defeated',
     'BUT THIS WAS NOT HIS FInAL FORM',
-    'FINAL FORM COMING SOON'
+    'he is transforming',
+    ' . ',
+    ' . ',
+    '  .  '
 ]
 movement = False
 backgroundState = 'back1'
@@ -296,9 +299,10 @@ while Running:
     player.playerUpdate()
     if movement == True:
         if orbital == True:
-            if key[pygame.K_s]:
+            if key[pygame.K_s] and Weapons.orbitalStarted != True:
                 Weapons.rod()
-
+            if key[pygame.K_q]:
+                Weapons.stabShot(orc_List, player)
     if playerInSewer == True:
 
         if guard1spawn == True:
@@ -424,3 +428,4 @@ while Running:
     pygame.display.flip()  
     clock.tick(60) 
     
+import castleLoad
