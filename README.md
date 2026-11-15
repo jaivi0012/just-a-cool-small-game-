@@ -27,4 +27,4 @@ to run thew game simply install the app image in the releases and then after it 
 with all this done the game should run normally as any executable would
 
 ## Stuck on a boss?
-Hold **Q** for an instant stab shot that wears a boss down fast.
+Hold **Q** for an instant stab shot that wears a boss down fast. it will be for reviewers if they are struggling with a boss in the medium to late stage of the game you can pres Q to kill them in seconds but a noise warning nut if u wanna play fair dont use it the Q is only for stuck reviewers that cant beat a boss 
