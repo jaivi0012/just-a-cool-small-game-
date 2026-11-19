@@ -14,6 +14,16 @@ class background:
         self.castle4 = pygame.image.load('backgroundImg/castle4.png').convert()
         self.castle5 = pygame.image.load('backgroundImg/castle5.png').convert()
         self.castle6 = pygame.image.load('backgroundImg/castle6.png').convert()
+        self.mountain1 = pygame.image.load('backgroundImg/Mountain1.png').convert()
+        self.mountain2 = pygame.image.load('backgroundImg/Mountain2.png').convert()
+        self.mountain3 = pygame.image.load('backgroundImg/Mountain3.png').convert()
+        self.mountain4 = pygame.image.load('backgroundImg/Mountain4.png').convert()
+        self.mountain5 = pygame.image.load('backgroundImg/Mountain5.png').convert()
+        self.mountain6 = pygame.image.load('backgroundImg/Mountain6.png').convert()
+        self.mountain7 = pygame.image.load('backgroundImg/Mountain7.png').convert()
+        self.mountain8 = pygame.image.load('backgroundImg/Mountain8.png').convert()
+        self.mountain9 = pygame.image.load('backgroundImg/Mountain9.png').convert()
+        self.mountain10 = pygame.image.load('backgroundImg/Mountain10.png').convert()
 
     def draw(self, screen, currentBackgroundReq):
         currentBack = None
@@ -42,5 +52,222 @@ class background:
         if currentBackgroundReq == 'Castle5' or currentBackgroundReq == 'Castle0':
             currentBack = self.castle5
         if currentBackgroundReq == 'Castle6':
-            currentBack = self.castle6        
+            currentBack = self.castle6     
+        if currentBackgroundReq == 'Mountain1':
+            currentBack = self.mountain1
+        if currentBackgroundReq == 'Mountain2':
+            currentBack = self.mountain2 
+        if currentBackgroundReq == 'Mountain3':
+            currentBack = self.mountain3 
+        if currentBackgroundReq == 'Mountain4':
+            currentBack = self.mountain4 
+        if currentBackgroundReq == 'Mountain5':
+            currentBack = self.mountain5 
+        if currentBackgroundReq == 'Mountain6':
+            currentBack = self.mountain6 
+        if currentBackgroundReq == 'Mountain7':
+            currentBack = self.mountain7 
+        if currentBackgroundReq == 'Mountain8':
+            currentBack = self.mountain8 
+        if currentBackgroundReq == 'Mountain9':
+            currentBack = self.mountain9 
+        if currentBackgroundReq == 'Mountain10':
+            currentBack = self.mountain10 
         screen.blit(currentBack, (0, 0))
+
+    def collision(self, currentBackgroundReq, player):
+        if currentBackgroundReq == 'Mountain1':
+            slope_start_x = 222 
+            slope_end_x = 0     
+            start_y = 600      
+            end_y = 290  
+
+           
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+               
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+        if currentBackgroundReq == 'Mountain2':
+            slope_start_x = 800
+            slope_end_x = 0     
+            start_y = 590      
+            end_y = 340  
+
+           
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+               
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+        if currentBackgroundReq == 'Mountain3':
+            slope_start_x = 200
+            slope_end_x = 0     
+            start_y = 600      
+            end_y = 472  
+
+           
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+               
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+        if currentBackgroundReq == 'Mountain4':
+            slope_start_x = 730 
+            slope_end_x = 0     
+            start_y = 610      
+            end_y = 300  
+
+           
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+               
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+        if currentBackgroundReq == 'Mountain5':
+            slope_start_x = 672 
+            slope_end_x = 0     
+            start_y = 610      
+            end_y = 350 
+
+           
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+               
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+        if currentBackgroundReq == 'Mountain6':
+            slope_start_x = 552 
+            slope_end_x = 216     
+            start_y = 610      
+            end_y = 300 
+
+            
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+                
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+            slope_start_x = 216 
+            slope_end_x = 0     
+            start_y = 300      
+            end_y = 300 
+
+            
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+                
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+        if currentBackgroundReq == 'Mountain7':
+            slope_start_x = 800 
+            slope_end_x = 300
+            start_y = 610      
+            end_y = 470 
+
+            
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+                
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
+
+            slope_start_x = 300
+            slope_end_x = 0 
+            start_y = 470    
+            end_y = 250
+
+            
+            if slope_end_x <= player.x <= slope_start_x:
+                
+                rise = end_y - start_y
+                run = slope_end_x - slope_start_x  
+                slope_gradient = rise / run
+
+                
+                current_x_offset = player.x - slope_start_x  
+                ground_y = start_y + (slope_gradient * current_x_offset)
+
+                if player.y + 80 >= ground_y: 
+                    player.y = ground_y - 80
+                    player.y_velocity = 0
+                    player.is_jumping = False
