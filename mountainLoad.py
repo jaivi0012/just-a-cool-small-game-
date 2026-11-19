@@ -12,15 +12,18 @@ import pumpkinBoss
 import backgroundLoader
 import orcBoss
 import rain
+import ramShower
 
 pygame.init()
 pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=512)
 pygame.mixer.set_num_channels(100000)
 screen = pygame.display.set_mode((800, 600))
+rain_sound = pygame.mixer.Sound("Sounds/rain.ogg")
 clock = pygame.time.Clock()
 bg = backgroundLoader.background()
 backgroundDraw = None
-player = playerLogic.Player(0, 500)   
+player = playerLogic.Player(0, 500)  
+ram_Shower = ramShower.RamShower(800, 600, obj_amount=30, size=(50, 60)) 
 Weapons = weapons.Weapons(player)
 rain = rain.RainSystem(800, 600)
 message1 = [
@@ -50,8 +53,28 @@ message1 = [
     'YOU ARE GETTING TELEORTED',
     'YOU HAVE BEEN TELEPORTED'
 ]
+
+message2 = [
+    'orcKing :- now that you are at the base of the mountain',
+    'orcKing :- you will have to climb it ',
+    'orcKing :- be careful this mountain is cursed',
+    'orcKing :- when climbing you will have dificulty jumping',
+    'orcKing :- once at the top you should be fine',
+    'orcKing :- i will not be able to communicate',
+    'orcKing :- because im low on energy ',
+    'orcKing :- if u get some ram',
+    'orcKing :- you have to give it to me as a offering',
+    'orcKing :- and then eat it yourself',
+    'orcKing :- then ill be able to appear',
+    'orcKing :- and be careful of Ram Altman',
+    'orcKing :- goodluck',
+    'orcKing :- little one...'
+]
+
+
 messageIndex = 0
 currentMessage = message1[messageIndex]
+rainSound = True
 Running = True
 stabby = False
 Rain = False
@@ -59,6 +82,7 @@ orc_List = []
 Dead = False
 lunge = True
 attack = False
+ramRain = True
 lungeCounter = 0
 change = False
 dialogue = True
@@ -90,6 +114,11 @@ while Running:
                     backgroundState = 'Mountain1'
                     movement = True
                     player.x = 520
+                if currentSection == 'Mountain2' and messageIndex > 13:
+                    messageIndex = 0
+                    currentSection = 'Mountain3'
+                    dialogue = False
+                    movement = True
                 
             if movement == True:                  
                 if event.key == pygame.K_SPACE:
@@ -110,8 +139,11 @@ while Running:
                     
     screen.fill((0, 0, 0))
     print(player.x, player.y)
+    print(clock)
     if currentSection == 'Mountain1' and dialogue == True:
         currentMessage = message1[messageIndex]
+    if currentSection == 'Mountain2' and dialogue == True:
+        currentMessage = message2[messageIndex]
     
     if stabby == True:
         stabbyCounter += 1
@@ -178,6 +210,13 @@ while Running:
     if Weapons.orbitalStarted == False:
         bgChange = True
 
+    if Rain == True and rainSound == True:
+        rain_sound.set_volume(0.4)
+        rain_sound.play(loops=-1)
+        rainSound = False
+    if Rain == False and rainSound == False:
+        rain_sound.stop()
+        rainSound = True
 
     if backgroundState == 'Mountain1':
         if player.x > 750:
@@ -189,6 +228,8 @@ while Running:
                 player.y = 500
             else:
                 player.x = 0
+        if currentSection == 'Mountain2':
+            dialogue = True
     if backgroundState == 'Mountain2':
         if player.x > 750:
             if bgChange == True:
@@ -315,6 +356,10 @@ while Running:
     Weapons.draw(screen, player)
     if Rain == True: 
         rain.update(screen)
+
+    if ramRain == True:
+        ram_Shower.update(player)
+        ram_Shower.draw(screen)
 
     if dialogue == True:
             screen.blit(dialogueBox, (50, 510))
