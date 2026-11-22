@@ -18,3 +18,11 @@ _assets/
 *.spec
 *.bak
 Tiny RPG*/
+build/
+dist/
+AppDir/
+__pycache__/
+*.AppImage
+runtime-x86_64
+*.spec
+venv/

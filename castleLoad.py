@@ -169,7 +169,7 @@ message8 = [
 
 message9 = [
     'LARRY HAS BEEN DEFEATED AND HAS DIED',
-    'TO BE CONTINUED ......'
+    'OrcKing Disappeared ?????'
 ]
 messageIndex = 0
 currentMessage = message1[messageIndex]
@@ -684,3 +684,5 @@ while Running:
     screen.blit(text, (20, 20))
     pygame.display.flip()  
     clock.tick(60)
+pygame.mixer.music.stop()
+import mountainLoad

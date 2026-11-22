@@ -15,9 +15,11 @@ class ramAltman:
 }
 
     GROUND_Y = 400
-    MUSIC_DELAY_FRAMES = 1025
+    MUSIC_DELAY_FRAMES = 1075
     GROUND_MIN_FRAMES = 120 
-
+    GROUND_MIN_FRAMES = 120
+    GROUND_MAX_FRAMES = 600            
+    GROUND_DAMAGE_TO_ASCEND = 1500
     def __init__(self, ox, oy, move, width, height):
         self.ox = ox
         self.oy = oy
@@ -37,11 +39,14 @@ class ramAltman:
         self.orcVelocityY = 0
         self.Direction = 'Right'
         self.attack = False
+        self.dead = True
 
         self.state = 'ASCEND'
         self.target = 'tar1'
         self.ascended_for = set()
         self.groundFrames = 0
+        self.groundFrames = 0
+        self.landHealth = self.health
 
         self.skyfall = False
         self.ramfall = False
@@ -180,20 +185,25 @@ class ramAltman:
             if math.hypot(targetx - self.ox, self.GROUND_Y - self.oy) < 30:
                 self.state = 'GROUND'
                 self.groundFrames = 0
+                self.landHealth = self.health
 
         elif self.state == 'GROUND':
             self.orcVelocityY = self._approach(self.oy, self.orcVelocityY, self.GROUND_Y)
             self.groundFrames += 1
 
             trigger = self.BOSS_TRIGGERS.get(self.target)
-            if (trigger is not None
-                    and self.target not in self.ascended_for
+            below_trigger = trigger is not None and self.health <= trigger
+            hurt_enough = (self.landHealth - self.health) >= self.GROUND_DAMAGE_TO_ASCEND
+            timed_out = self.groundFrames >= self.GROUND_MAX_FRAMES
+
+            if (self.health > 0
                     and self.groundFrames >= self.GROUND_MIN_FRAMES
-                    and 0 < self.health <= trigger):
-                self.ascended_for.add(self.target)
+                    and (below_trigger or hurt_enough or timed_out)):
                 self.ramfall = True
                 self.skyfall = False
                 self.state = 'ASCEND'
+
+
         if self.health <= 0:
             self.skyfall = False
 
