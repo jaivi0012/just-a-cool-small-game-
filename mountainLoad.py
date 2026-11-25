@@ -117,7 +117,9 @@ message6 = [
     'but something is wrong',
     'there is no ram stash here',
     'and ram Altman never died',
-    'Final Fight Comin Soon'
+    'Final Fight Comin Soon',
+    ' . ',
+    ' . '
 ]
 
 messageIndex = 0
@@ -241,6 +243,7 @@ while Running:
                     messageIndex = 0
                     currentSection = 'goodbye'
                     dialogue = False
+                    Running = False
             if movement == True:                  
                 if event.key == pygame.K_SPACE:
                     player.jump()  
@@ -939,8 +942,9 @@ while Running:
             screen.blit(dialogueBox, (50, 510))
             textSurface = gameFont.render(currentMessage, True, (255, 255, 255))
             screen.blit(textSurface, (80, 535))
-    if currentSection == 'goodbye':
-        Running = False
+    
     screen.blit(text, (20, 20))
     pygame.display.flip()  
     clock.tick(60)
+
+import RevengeOfAltman
