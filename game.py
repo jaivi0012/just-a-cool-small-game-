@@ -1253,9 +1253,7 @@ while running:
     if startNewGame == True:
         pygame.mixer.music.stop()
         sys.path.insert(0, os.getcwd())
-        import newLoad         
 
-
-
+import newLoad         
 
 pygame.quit()

@@ -145,10 +145,45 @@ while Running:
 
     if portalAppear == True:
         if player.playerRect.colliderect(portalRect):
-            player.x = 750
+            player.x == 550
             backgroundState = 'Mountain1'
             portalAppear = False
             dialogue = True
+
+    if backgroundState == 'Mountain1':
+        if player.x < 22:
+            player.x = 22
+        if player.x > 750:
+            player.x = 0
+            backgroundState ='Bottom1'
+    if backgroundState == 'Bottom1':
+        if player.x < 0:
+            player.x = 750
+            backgroundState = 'Mountain1'
+        if player.x > 750:
+            player.x = 0
+            backgroundState = 'Bottom2'
+    print(backgroundState)
+    if backgroundState == 'Bottom2':
+        if player.x < 0:
+            player.x = 750
+            backgroundState = 'Bottom1'
+        if player.x > 750:
+            player.x = 0
+            backgroundState = 'Bottom3'
+    if backgroundState == 'Bottom3':
+        if player.x < 0:
+            player.x = 750
+            backgroundState = 'Bottom2'
+        if player.x > 750:
+            player.x = 0
+            backgroundState = 'Bottom4'
+    if backgroundState == 'Bottom4':
+        if player.x < 0:
+            player.x = 750
+            backgroundState = 'Bottom3'
+        if player.x > 750:
+            player.x = 750
 
     if movement == True:
         player.move(key, backgroundState)

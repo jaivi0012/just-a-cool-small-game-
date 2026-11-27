@@ -24,6 +24,15 @@ class background:
         self.mountain8 = pygame.image.load('backgroundImg/Mountain8.png').convert()
         self.mountain9 = pygame.image.load('backgroundImg/Mountain9.png').convert()
         self.mountain10 = pygame.image.load('backgroundImg/Mountain10.png').convert()
+        self.bottom1 = pygame.image.load('backgroundImg/bottom1.png').convert()
+        self.bottom2 = pygame.image.load('backgroundImg/bottom2.png').convert()
+        self.bottom3 = pygame.image.load('backgroundImg/bottom3.png').convert()
+        self.bottom4 = pygame.image.load('backgroundImg/bottom4.png').convert()
+        self.closed1 = pygame.image.load('backgroundImg/closed1.png').convert()
+        self.closed2 = pygame.image.load('backgroundImg/closed2.png').convert()
+        self.closed3 = pygame.image.load('backgroundImg/closed3.png').convert()
+        self.factoryDestroyed = pygame.image.load('backgroundImg/factoryDestroyed.png').convert()
+        self.reactor1 = pygame.image.load('backgroundImg/reactor1.png')
 
     def draw(self, screen, currentBackgroundReq):
         currentBack = None
@@ -73,6 +82,31 @@ class background:
             currentBack = self.mountain9 
         if currentBackgroundReq == 'Mountain10':
             currentBack = self.mountain10 
+        if currentBackgroundReq == 'Bottom1':
+            currentBack = self.bottom1
+        if currentBackgroundReq == 'Bottom2':
+            currentBack = self.bottom2
+        if currentBackgroundReq == 'Bottom3':
+            currentBack = self.bottom3
+        if currentBackgroundReq == 'Bottom4':
+            currentBack = self.bottom4
+        if currentBackgroundReq == 'FactoryDestroyed':
+            currentBack = self.factoryDestroyed
+        if currentBackgroundReq == 'Closed1':
+            currentBack = self.closed1
+        if currentBackgroundReq== 'Closed2':
+            currentBack = self.closed2
+        if currentBackgroundReq == 'Closed3':
+            currentBack = self.closed3
+        if currentBackgroundReq == 'Reactor1':
+            currentBack = self.reactor1
+
+        # ill chage these to reactor2 and reactor3 once i have made those assets
+        if currentBackgroundReq == 'Reactor2':
+            currentBack = self.reactor1
+        if currentBackgroundReq == 'Reactor3':
+            currentBack = self.reactor1  
+         
         screen.blit(currentBack, (0, 0))
 
     def collision(self, currentBackgroundReq, player):
